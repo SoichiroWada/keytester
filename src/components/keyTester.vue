@@ -18,6 +18,9 @@
     </div>
     <div class="alert" id="alertJ"> {{ message01 }}</div>
     <div class="alert" id="alertE"> {{ message02 }}</div>
+    <div class="tester-layout">
+    <JapaneseKeyboard />
+    <section class="results" aria-label="Keyboard event results">
     <div class="text" id="inputValue">inputValue: {{ inputValue }}</div>
     <h2 class="input" id="keydown">keydown</h2>
     <div class="text" id="message1">{{ message1 }}</div>
@@ -35,6 +38,9 @@
     <div class="text" id="message11">{{ message11 }}</div>
     <div class="text" id="message12">{{ message12 }}</div>
 
+    </section>
+    </div>
+
     <div id="url">
       <a href="https://www.w3.org/2002/09/tests/keys.html" class="ref" target="_blank">Key and Character Codes vs. Event Types</a><br>
       <a href="https://www.w3.org/TR/uievents-code/" class="ref" target="_blank">UI Events KeyboardEvent code Values</a><br>
@@ -45,8 +51,11 @@
 </template>
 
 <script>
+import JapaneseKeyboard from './JapaneseKeyboard.vue'
+
 export default {
   name: 'keyTester',
+  components: { JapaneseKeyboard },
   data:function(){
     return {
       msg: "Keycode Finder - VUE CLI",
