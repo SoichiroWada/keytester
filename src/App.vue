@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import keyTester from '@/components/keyTester.vue'
+import keyTester from './components/keyTester.vue'
 
 export default {
   name: 'app',

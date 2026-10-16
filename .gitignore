@@ -19,3 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+# Preserved build from before the Vue 3 migration
+/dist.legacy-2018

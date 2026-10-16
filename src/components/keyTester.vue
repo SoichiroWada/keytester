@@ -4,9 +4,10 @@
     <div>
       <input
       v-model="inputValue"
-      v-on:focus="changeBackgroundColor"
-      v-on:focusout="revertBackgroundColor"
-      v-bind:style="this.styleChangeArray"
+      v-on:focus="isFocused = true"
+      v-on:focusout="isFocused = false"
+      v-bind:style="{ backgroundColor: isFocused ? 'white' : '#021128' }"
+      ref="textbox"
       placeholder="CLICK THIS TEXT BOX"
       id="textbox"
       v-on:keydown="keyDown"
@@ -50,7 +51,8 @@ export default {
     return {
       msg: "Keycode Finder - VUE CLI",
       inputValue: null,
-      message0:null,
+      message01:null,
+      message02:null,
       message1:null,
       message2:null,
       message3:null,
@@ -63,7 +65,7 @@ export default {
       message10:null,
       message11:null,
       message12:null,
-      styleChangeArray: []
+      isFocused: false
     }
   },
   methods: {
@@ -109,14 +111,7 @@ export default {
       this.message11 = null;
       this.message12 = null;
       this.inputValue = null;
-      document.getElementById("textbox").focus();
-      // console.clear();
-    },
-    changeBackgroundColor(){
-      this.styleChangeArray.push({ backgroundColor:'white'});
-    },
-    revertBackgroundColor(){
-      this.styleChangeArray.push({ backgroundColor:'#021128'});
+      this.$refs.textbox.focus();
     }
   }
 }
