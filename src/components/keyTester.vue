@@ -2,12 +2,23 @@
   <div class="keytester">
     <h1>{{ msg }}</h1>
     <div>
+      <div class="layout-switch" role="radiogroup" aria-label="キーボード配列 / Keyboard layout">
+        <label :class="{ selected: layout === 'ja' }">
+          <input type="radio" name="layout" value="ja" v-model="layout" v-on:change="focusTextbox">
+          日本語 / Japanese
+        </label>
+        <label :class="{ selected: layout === 'en' }">
+          <input type="radio" name="layout" value="en" v-model="layout" v-on:change="focusTextbox">
+          英語 / English
+        </label>
+      </div>
       <input
       v-model="inputValue"
       v-on:focus="isFocused = true"
       v-on:focusout="isFocused = false"
       v-bind:style="{ backgroundColor: isFocused ? 'white' : '#021128' }"
       ref="textbox"
+      autofocus
       placeholder="CLICK THIS TEXT BOX"
       id="textbox"
       v-on:keydown="keyDown"
@@ -19,7 +30,8 @@
     <div class="alert" id="alertJ"> {{ message01 }}</div>
     <div class="alert" id="alertE"> {{ message02 }}</div>
     <div class="tester-layout">
-    <JapaneseKeyboard />
+    <JapaneseKeyboard v-if="layout === 'ja'" />
+    <EnglishKeyboard v-else />
     <section class="results" aria-label="Keyboard event results">
     <div class="text" id="inputValue">inputValue: {{ inputValue }}</div>
     <h2 class="input" id="keydown">keydown</h2>
@@ -52,10 +64,15 @@
 
 <script>
 import JapaneseKeyboard from './JapaneseKeyboard.vue'
+import EnglishKeyboard from './EnglishKeyboard.vue'
+
+function savedLayout() {
+  try { return localStorage.getItem('keyboardLayout') === 'en' ? 'en' : 'ja' } catch { return 'ja' }
+}
 
 export default {
   name: 'keyTester',
-  components: { JapaneseKeyboard },
+  components: { JapaneseKeyboard, EnglishKeyboard },
   data:function(){
     return {
       msg: "Keycode Finder - VUE CLI",
@@ -74,10 +91,26 @@ export default {
       message10:null,
       message11:null,
       message12:null,
-      isFocused: false
+      isFocused: false,
+      layout: savedLayout()
     }
   },
+  watch: {
+    layout(value) {
+      try { localStorage.setItem('keyboardLayout', value) } catch { /* ignore */ }
+    }
+  },
+  mounted() {
+    this.focusTextbox()
+    window.addEventListener('pageshow', this.focusTextbox)
+  },
+  beforeUnmount() {
+    window.removeEventListener('pageshow', this.focusTextbox)
+  },
   methods: {
+    focusTextbox() {
+      this.$refs.textbox.focus()
+    },
     keyDown(event){
       if (event.keyCode === 229) {
         this.message01 = "カナ漢字変換をOFFにしてください";
@@ -120,7 +153,7 @@ export default {
       this.message11 = null;
       this.message12 = null;
       this.inputValue = null;
-      this.$refs.textbox.focus();
+      this.focusTextbox();
     }
   }
 }

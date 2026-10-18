@@ -1,7 +1,7 @@
 <template>
   <section class="keyboard-panel" aria-label="日本語109キーボード">
     <h2>日本語キーボード（109キー）</h2>
-    <p>キーを押している間、対応するキーが光ります。同時押しにも対応しています。</p>
+    <p>TEXTボックスをクリックしてからキーを押します。押したキーが光ります。同時押しにも対応しています。</p>
     <div class="keyboard-scroll">
       <svg viewBox="0 0 1000 330" role="img" aria-label="テンキー付き日本語キーボード。押したキーを緑色で表示します。">
         <rect class="keyboard-case" x="0" y="0" width="1000" height="330" rx="12" />
@@ -17,7 +17,7 @@
         </g>
       </svg>
     </div>
-    <p class="keyboard-note">入力欄をクリックしてお試しください。Fn キーや Windows キーなど、OS・ブラウザーが受け取るキーは反応しない場合があります。</p>
+    <p class="keyboard-note">FnキーやPrintScreenなど、OSが受け取るキーは反応しない場合があります。</p>
   </section>
 </template>
 
@@ -105,7 +105,7 @@ export default {
 .keyboard-panel h2 { font-size: 22px; }
 .keyboard-panel p { color: #b8c5d5; font-size: 14px; line-height: 1.7; }
 .keyboard-scroll { overflow-x: auto; padding: 16px 0; }
-svg { display: block; width: 100%; min-width: 720px; }
+svg { display: block; width: 100%; max-width: 1100px; min-width: 680px; }
 .keyboard-case { fill: #111820; stroke: #465467; }
 .keyboard-key rect, .keyboard-key polygon { fill: #303b49; stroke: #607086; stroke-width: 1; }
 .keyboard-key text { fill: #edf2fa; font-size: 11px; font-family: sans-serif; pointer-events: none; }
